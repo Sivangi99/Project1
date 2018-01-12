@@ -16,34 +16,32 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    Spinner category,level;
+    Spinner category;
     Button go;
-    boolean cat,lvl;
+    boolean cat;
     int timelimit=60;
     String[] c={"Select your category","Aptitude","Science","Current Affairs","Riddles"};
-    String[] l={"Select your level","Easy","Medium","Hard"};
-    @Override
+       @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         category=(Spinner)findViewById(R.id.category);
-        level=(Spinner)findViewById(R.id.level);
         go=(Button)findViewById(R.id.cont);
         loadCategory();
-        loadLevel();
+
         category.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position > 0)
                 {
-                    cat = true;
+                    cat=true;
                         Toast.makeText(parent.getContext(), "You selected: " + c[position], Toast.LENGTH_LONG).show();
                 }
                 else
                     cat = false;
-                if (cat && lvl)
+                if (cat)
                     go.setEnabled(true);
                 else
                     go.setEnabled(false);
@@ -55,29 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        level.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 0)
-                {
-                    lvl = true;
-                    Toast.makeText(parent.getContext(), "You selected: " + l[position], Toast.LENGTH_LONG).show();
-                }
-                else
-                    lvl = false;
-                if (cat && lvl)
-                    go.setEnabled(true);
-                else
-                    go.setEnabled(false);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        go.setOnClickListener(new View.OnClickListener() {
+           go.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 cont();
@@ -106,9 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplication(),"My Profile",Toast.LENGTH_SHORT).show();
                 break;
 
-            case R.id.settings:
-                Toast.makeText(getApplication(),"Settings",Toast.LENGTH_SHORT).show();
-                break;
+
 
             case R.id.about:
                 Toast.makeText(getApplication(),"About",Toast.LENGTH_SHORT).show();
@@ -179,16 +153,7 @@ public class MainActivity extends AppCompatActivity {
         // attaching data adapter to spinner
         category.setAdapter(dataAdapter);
     }
-    public void loadLevel()
-    {
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,l);
 
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        // attaching data adapter to spinner
-        level.setAdapter(dataAdapter);
-    }
     public void cont()
     {
         AlertDialog.Builder b=new AlertDialog.Builder(this);
